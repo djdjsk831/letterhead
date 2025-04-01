@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Bee Letterhead Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary-green: #4cd137;
+            --light-green: #7bed9f;
+            --honey-gold: #FFD700;
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --card-bg: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-medium: #e0e0e0;
+            --text-dark: #b0b0b0;
+            --border-color: #333;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-medium);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: var(--text-light);
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary-green), var(--honey-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+        
+        .form-section {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+        }
+        
+        .preview-section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            border: 1px solid var(--border-color);
+
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            background-color: var(--darker-bg);
+            color: var(--text-medium);
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 2px rgba(76, 209, 55, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover {
+            background-color: var(--light-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .download-btn {
+            background-color: var(--honey-gold);
+            color: #333;
+            margin-top: 20px;
+        }
+        
+        .download-btn:hover {
+            background-color: #ffeb3b;
+        }
+        
+        .download-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Letterhead Styles */
+        .letterhead {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letterhead .header {
+            position: relative;
+            padding: 30px 40px 20px 40px;
+            background-color: var(--darker-bg);
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), 0 100%);
+            padding-bottom: 50px;
+        }
+        
+        .letterhead .header::before {
+            content: "";
+            position: absolute;
+            right: -50px;
+            top: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(76, 209, 55, 0.1);
+            border-radius: 50%;
+        }
+        
+        .letterhead .header::after {
+            content: "";
+            position: absolute;
+            left: 30%;
+            bottom: -30px;
+            width: 60%;
+            height: 60px;
+            background-color: var(--darker-bg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 20% 50%);
+            z-index: 1;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            z-index: 2;
+        }
+        
+        .logo-container {
+    display: flex;
+    align-items: center;
+    background-color: transparent; /* Change this from var(--darker-bg) */
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: none; /* Remove the box-shadow if it's causing issues */
+}
+        
+        .logo-img {
+            height: 80px;
+            margin-right: 20px;
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
+        }
+        .footer-img{
+            height: 30px;
+            margin-right: 10px;
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
+        }
+        
+        .logo-text {
+            color: white;
+        }
+        
+        /* Modified logo text style - using solid colors for export compatibility */
+        .logo-text h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: white; /* Default color for fallback */
+   
+}
+
+.logo-text h1 span.green {
+    color: var(--primary-green);
+    background: transparent;
+}
+
+.logo-text h1 span.bee1 {
+    color: var(--honey-gold);
+    background: transparent;
+}
+        .logo-text h1::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-green);
+        }
+        
+        .logo-text p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+        
+        .contact-info {
+            color: var(--text-light);
+            text-align: right;
+            position: relative;
+            z-index: 2;
+            padding-right: 10px;
+        }
+        
+        .contact-info p {
+            margin: 8px 0;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .contact-info .highlight {
+            color: var(--honey-gold);
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        
+        .contact-info svg {
+            margin-left: 8px;
+            width: 14px;
+            height: 14px;
+            color: var(--primary-green);
+        }
+        
+        .honeycomb-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at center, var(--primary-green) 0%, transparent 60%),
+                repeating-linear-gradient(60deg, var(--primary-green) 0, var(--primary-green) 1px, transparent 1px, transparent 20px);
+            z-index: 1;
+        }
+        
+        .content {
+            position: relative;
+            padding: 40px;
+            background-color: white;
+            z-index: 2;
+            color: #333;
+        }
+        
+        .date-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(76, 209, 55, 0.2);
+            padding-bottom: 10px;
+        }
+        
+        .ref-number {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .ref-number span {
+            font-weight: 600;
+        }
+        
+        .date {
+            text-align: right;
+            font-style: normal;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .hexagon-pattern {
+            position: absolute;
+            right: 0;
+            top: 40%;
+            width: 300px;
+            height: 300px;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(#333 10%, transparent 10.5%),
+                radial-gradient(#333 10%, transparent 10.5%);
+            background-position: 0 0, 15px 15px;
+            background-size: 30px 30px;
+            z-index: 1;
+            mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+        }
+        
+        .letter-content {
+            position: relative;
+            z-index: 2;
+            color: #333;
+        }
+        
+        .footer {
+            position: relative;
+            padding: 15px 40px;
+            background-color: var(--darker-bg);
+            color: var(--text-medium);
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 2;
+        }
+        
+        .footer-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            height: 30px;
+            margin-right: 15px;
+        }
+        
+        .footer a {
+            color: var(--honey-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: var(--primary-green);
+        }
+        
+        .letter-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .signature {
+            margin-top: 40px;
+        }
+        
+        .signature p {
+            margin: 5px 0;
+        }
+        
+        .signature .name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .signature .title {
+            font-style: italic;
+            color: #666;
+        }
+        
+        /* Responsive styles */
+     /* Update your responsive styles section */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-section {
+        position: static;
+        margin-top: 30px;
+        overflow-x: auto; /* Allow horizontal scrolling */
+        overflow-y: auto; /* Allow vertical scrolling */
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    /* Keep the letterhead preview fixed size */
+    #letterhead-preview {
+        min-width: 794px; /* A4 width in pixels at 96dpi (approximately) */
+        overflow: visible;
+    }
+    
+    .letterhead {
+        width: 794px; 
+        transform-origin: top left;
+        margin: 0 auto;
+    }
+    
+    .download-btns {
+        grid-template-columns: 1fr;
+    }
+}
+        
+        /* Print styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .letterhead, .letterhead * {
+                visibility: visible;
+            }
+            .letterhead {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--light-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Green Bee Letterhead Generator</h1>
+            <p>Create professional letterheads for your business communications</p>
+        </div>
+        
+        <div class="form-section">
+            <h2 style="color: var(--text-light); margin-top: 0;">Letterhead Details</h2>
+            
+            <div class="form-group">
+                <label for="recipient">Recipient Name</label>
+                <input type="text" id="recipient" placeholder="Enter recipient name">
+            </div>
+            
+            <div class="form-group">
+                <label for="letter-content">Letter Content</label>
+                <textarea id="letter-content" placeholder="Enter your letter content here...">Thank you for your continued support of Green Bee Supermarket. We are committed to providing the freshest, most sustainable groceries to our community while maintaining our promise of quality and environmental responsibility.
+
+At Green Bee, we believe in supporting local farmers and offering products that are good for both our customers and the environment. Our team works tirelessly to ensure that every item on our shelves meets our high standards for quality and sustainability.
+
+We value your partnership and look forward to continuing to serve you with excellence.</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="sender-name">Your Name</label>
+                <input type="text" id="sender-name" placeholder="Enter your name">
+            </div>
+            
+            <div class="form-group">
+                <label for="sender-title">Your Title</label>
+                <input type="text" id="sender-title" placeholder="Enter your title/position">
+            </div>
+            
+            <div class="form-group">
+                <label for="reference">Reference Number (optional)</label>
+                <input type="text" id="reference" placeholder="Enter reference number">
+            </div>
+            
+            <button id="update-preview">Update Preview</button>
+        </div>
+        
+        <div class="preview-section">
+            <h2 style="color: var(--text-light); margin-top: 0;">Letterhead Preview</h2>
+            <div id="letterhead-preview">
+                <!-- Preview will be inserted here by JavaScript -->
+            </div>
+            <div class="download-btns">
+                <button id="download-png" class="download-btn">Download as Image</button>
+                <button id="download-pdf" class="download-btn">Download as PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize preview
+            updatePreview();
+            
+            // Set up event listeners
+            document.getElementById('update-preview').addEventListener('click', updatePreview);
+            document.getElementById('download-png').addEventListener('click', downloadPNG);
+            document.getElementById('download-pdf').addEventListener('click', downloadPDF);
+            
+            // Auto-update preview when typing in textarea
+            document.getElementById('letter-content').addEventListener('input', function() {
+                updatePreview();
+            });
+            
+            // Auto-update preview when typing in other fields
+            const inputFields = ['recipient', 'sender-name', 'sender-title', 'reference'];
+            inputFields.forEach(field => {
+                document.getElementById(field).addEventListener('input', updatePreview);
+            });
+            
+            // Set default reference number
+            document.getElementById('reference').value = 'GB-' + getCurrentDateShort() + '-01';
+        });
+        
+        function updatePreview() {
+            const recipient = document.getElementById('recipient').value || '[Recipient]';
+            const content = document.getElementById('letter-content').value;
+            const senderName = document.getElementById('sender-name').value || '[Your Name]';
+            const senderTitle = document.getElementById('sender-title').value || 'Director of Operations';
+            const reference = document.getElementById('reference').value || 'GB-' + getCurrentDateShort() + '-01';
+            
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const currentDate = today.toLocaleDateString('en-US', options);
+            
+            const previewHTML = `
+                <div class="letterhead">
+                    <div class="header">
+                        <div class="honeycomb-bg"></div>
+                        <div class="logo-section">
+                            <div class="logo-container">
+                                <img class="logo-img" src="./WhatsApp_Image_2025-03-23_at_4.57.35_PM-removebg-preview.png" alt="logo">
+                                <div class="logo-text">
+                                    <h1><span class="green">Green</span> <span class="bee1">Bee</span></h1>
+                                    <p>Supermarket - 
+                                        Food Court - 
+                                        Party Hall</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-info">
+                            <p>
+                                Kalikulam - Pottikkavala Road,Maruthorvattom P.O., Cherthala, Alappuzha-Kerala-India-688 539
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0Y2QxMzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMjEgMTBjMCA3LTkgMTMtOSAxM3MtOS02LTktMTNhOSA5IDAgMCAxIDE4IDB6Ii8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMCIgcj0iMyIvPjwvc3ZnPg==" style="margin-left: 8px;" />
+                            </p>
+                            <p>
+                                <span>+91 974747048</span>
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0Y2QxMzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMjIgMTYuOTJ2M2EyIDIgMCAwIDEtMi4xOCAyIDE5Ljc5IDE5Ljc5IDAgMCAxLTguNjMtMy4wNyAxOS41IDE5LjUgMCAwIDEtNi02IDE5Ljc5IDE5Ljc5IDAgMCAxLTMuMDctOC42N0EyIDIgMCAwIDEgNC4xMSAyaDNhMiAyIDAgMCAxIDIgMS43MiAxMi44NCAxMi44NCAwIDAgMCAuNyAyLjgxIDIgMiAwIDAgMS0uNDUgMi4xMUw4LjA5IDkuOTFhMTYgMTYgMCAwIDAgNiA2bDEuMjctMS4yN2EyIDIgMCAwIDEgMi4xMS0uNDUgMTIuODQgMTIuODQgMCAwIDAgMi44MS43QTIgMiAwIDAgMSAyMiAxNi45MnoiLz48L3N2Zz4=" style="margin-left: 8px;" />
+                            </p>
+                            <p>
+                                greenbeesupermarket@gmail.com
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM0Y2QxMzciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNNCA0aDE2YzEuMSAwIDIgLjkgMiAydjEyYzAgMS4xLS45IDItMiAySDRjLTEuMSAwLTItLjktMi0yVjZjMC0xLjEuOS0yIDItMnoiLz48cG9seWxpbmUgcG9pbnRzPSIyMiw2IDEyLDEzIDIsNiI+PC9wb2x5bGluZT48L3N2Zz4=" style="margin-left: 8px;" />
+                            </p>
+                            <p>
+                                GST: <span>32BDVPV1205K1Z9</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="content">
+                        <div class="date-section">
+                            <div class="ref-number">Reference: <span>${reference}</span></div>
+                            <div class="date">${currentDate}</div>
+                        </div>
+                        
+                        <div class="hexagon-pattern"></div>
+                        
+                        <div class="letter-content">
+                            <p>Dear ${recipient},</p>
+                            
+                            ${content.split('\n').map(paragraph => paragraph.trim() ? `<p>${paragraph}</p>` : '').join('')}
+                            
+                            <div class="signature">
+                                <p class="name">${senderName}</p>
+                                <p class="title">${senderTitle}</p>
+                                <p>Green Bee Supermarket</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer">
+                        <div class="footer-left">
+                            <img class="footer-img" src="./WhatsApp_Image_2025-03-23_at_4.57.35_PM-removebg-preview.png" alt="logo">
+                            © ${new Date().getFullYear()} Green Bee Supermarket. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('letterhead-preview').innerHTML = previewHTML;
+        }
+        
+        function getCurrentDateShort() {
+            const today = new Date();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const year = String(today.getFullYear()).slice(2);
+            return month + day + year;
+        }
+        
+        function downloadPNG() {
+    // Get the letterhead element
+    const element = document.querySelector('.letterhead');
+    
+    // Get the logo-text h1 element
+    const logoTextH1 = document.querySelector('.logo-text h1');
+    
+    // Show loading state
+    const btn = document.getElementById('download-png');
+    const originalText = btn.textContent;
+    btn.textContent = 'Generating Image...';
+    btn.disabled = true;
+    
+    // Change background to transparent on logo-text h1 for download
+    const originalBackground = logoTextH1.style.background || ''; // Store the original background
+    logoTextH1.style.background = 'transparent'; // Set background to transparent
+    
+    // Use html2canvas to capture the element as an image
+    html2canvas(element, {
+        scale: 3, // Higher scale for better quality
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        allowTaint: true,
+        letterRendering: true,
+        ignoreElements: (element) => {
+            // Ignore elements that might cause issues
+            return element.classList && element.classList.contains('ignore-for-export');
+        }
+    }).then(canvas => {
+        // Convert canvas to data URL
+        const imgData = canvas.toDataURL('image/png', 1.0);
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = 'green-bee-letterhead.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Restore the background and button state
+        logoTextH1.style.background = originalBackground; // Restore the original background
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }).catch(err => {
+        console.error('Image generation error:', err);
+        alert('Image generation failed: ' + (err.message || 'Unknown error'));
+        
+        // Restore the background and button state
+        logoTextH1.style.background = originalBackground; // Restore the original background
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
+}
+
+function downloadPDF() {
+    // Get the letterhead element
+    const element = document.querySelector('.letterhead');
+
+    // Get the logo-text h1 element
+    const logoTextH1 = document.querySelector('.logo-text h1');
+
+    // Show loading state
+    const btn = document.getElementById('download-pdf');
+    const originalText = btn.textContent;
+    btn.textContent = 'Generating PDF...';
+    btn.disabled = true;
+
+    // Change background to transparent on logo-text h1 for download
+    const originalBackground = logoTextH1.style.background || ''; // Store the original background
+    logoTextH1.style.background = 'transparent'; // Set background to transparent
+
+    // Use html2canvas to capture the element as an image
+    html2canvas(element, {
+        scale: 3, // Higher scale for better quality in PDF
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff', // Ensure white background is rendered (change to transparent if needed)
+        allowTaint: true,
+        letterRendering: true,
+        ignoreElements: (element) => {
+            // Ignore elements that might cause issues
+            return element.classList && element.classList.contains('ignore-for-export');
+        }
+    }).then(canvas => {
+        // Calculate PDF dimensions (A4 size in mm)
+        const pdfWidth = 210; // A4 width in mm
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+            orientation: pdfHeight > pdfWidth ? 'portrait' : 'landscape',
+            unit: 'mm',
+            format: [pdfWidth, pdfHeight],
+            background: 'transparent'  // Attempting transparent background in PDF
+        });
+
+        // Add image to PDF
+        const imgData = canvas.toDataURL('image/png', 1.0);
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'NONE');  // 'NONE' as transparency
+
+        // Save the PDF
+        pdf.save('green-bee-letterhead.pdf');
+
+        // Restore button state
+        logoTextH1.style.background = originalBackground;
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }).catch(err => {
+        console.error('PDF generation error:', err);
+        alert('PDF generation failed: ' + (err.message || 'Unknown error'));
+
+        // Restore button state
+        logoTextH1.style.background = originalBackground;
+        btn.textContent = originalText;
+        btn.disabled = false;
+    });
+}
+
+    </script>
+</body>
+</html>
